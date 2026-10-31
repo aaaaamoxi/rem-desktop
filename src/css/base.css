@@ -1,0 +1,117 @@
+/* ============ base.css — 重置 / 舞台 / 配色变量 ============ */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #191d2b;
+}
+
+body {
+  font-family: "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { -webkit-user-drag: none; }
+
+:root {
+  --ink: #232838;
+  --ink-soft: #5a6274;
+  --paper: rgba(255, 255, 255, 0.94);
+  --line: rgba(35, 40, 56, 0.12);
+  --brand: #ff8f6b;
+  --brand-ink: #b8472a;
+  --taskbar-h: 0px;   /* 桌面版没有假任务栏 */
+  --icon-w: 84px;
+}
+
+/* ---------- 表情层用的三个颜色 ----------
+   角色现在是位图，不吃 SVG 配色变量了；这里只剩表情贴片需要的色：
+   肤色补丁（盖住睁眼）、眼线、张嘴的口腔色。
+   —————————————————————————— */
+[data-char="ram"] {
+  --fx-skin: #f7e7da;
+  --fx-line: #4a3240;
+  --fx-mouth: #b0556a;
+}
+
+[data-char="rem"] {
+  --fx-skin: #f7e7da;
+  --fx-line: #3a2f45;
+  --fx-mouth: #a8556a;
+}
+
+/* ---------- 舞台 ---------- */
+#stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* ---------- toast ---------- */
+.toast {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--taskbar-h) + 22px);
+  transform: translateX(-50%);
+  z-index: 600;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: rgba(28, 32, 46, 0.86);
+  color: #fff;
+  font-size: 13px;
+  letter-spacing: 0.2px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  animation: toast-in 0.22s ease-out;
+  pointer-events: none;
+}
+
+.toast[hidden] { display: none; }
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(8px) scale(0.96); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+}
+
+/* 抖屏：抖的是舞台，不是 body（避免滚动条） */
+#stage.is-shaking { animation: stage-shake 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97); }
+
+/* ---------- 桌面版：整个窗口透明，桌面是系统自己的 ---------- */
+html.is-desktop,
+html.is-desktop body {
+  background: transparent !important;
+}
+
+html.is-desktop #stage { background: transparent; }
+
+html.is-desktop .toast { bottom: 58px; }
+
+html.is-desktop .debug { bottom: 14px; }
+
+/* 桌面上没有"假桌面"这一层，弹窗就别再压一层半透明黑罩整个屏幕 ——
+   又挡视线又和鼠标穿透对不上（罩住的地方其实点得到桌面）。
+   只留那个白色盒子，鼠标也只跟盒子过。 */
+html.is-desktop #modalMask {
+  background: none;
+  backdrop-filter: none;
+}
+
+@keyframes stage-shake {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  12% { transform: translate3d(-5px, 3px, 0); }
+  26% { transform: translate3d(5px, -4px, 0); }
+  40% { transform: translate3d(-4px, -2px, 0); }
+  54% { transform: translate3d(4px, 4px, 0); }
+  68% { transform: translate3d(-3px, 1px, 0); }
+  82% { transform: translate3d(3px, -2px, 0); }
+}

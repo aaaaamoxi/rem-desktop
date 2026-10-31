@@ -1,0 +1,49 @@
+# electron-builder 配置
+# 单独一个文件比塞在 package.json 里更清楚，
+# 也方便 electron-builder --prepackaged 时用 -c 显式指定。
+
+appId: com.rem.desktoppet
+productName: 雷姆桌宠
+copyright: Copyright © 2026 Rem Desk Pet Contributors
+asar: true
+
+directories:
+  output: dist
+
+files:
+  - index.html
+  - src/**/*
+  - assets/**/*
+  - electron/**/*
+  - package.json
+  - "!_stage"
+  - "!_build"
+  - "!_art"
+  - "!dist"
+  - "!dist*"
+  - "!tools"
+  - "!_shots"
+  - "!docs"
+  - "!**/*.md"
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: assets/icon.ico
+  artifactName: 雷姆桌宠-${version}-安装包.${ext}
+
+nsis:
+  # false = 带安装向导（能选目录），比 oneClick 友好
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: 雷姆桌宠
+  installerIcon: assets/icon.ico
+  uninstallerIcon: assets/icon.ico
+  installerHeaderIcon: assets/icon.ico
+  # 卸载时保留存档和日志，不然用户重装就丢了记忆
+  deleteAppDataOnUninstall: false

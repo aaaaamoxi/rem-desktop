@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<title>icon</title>
+<style>
+  html, body { margin: 0; height: 100%; display: flex; align-items: center; justify-content: center; background: #fff; }
+  /* 256 的圆角盘：粉色渐变底 + 立绘头部 */
+  #plate {
+    position: relative;
+    width: 256px;
+    height: 256px;
+    overflow: hidden;
+    border-radius: 58px;
+    background: linear-gradient(160deg, #ffe6ee 0%, #ffc4d8 56%, #f79dba 100%);
+  }
+  /* 实测头部轮廓：源图 x10..703 / y20..715（≈693×695）
+     S = 224/695 = 0.322 → 整图 230×458，四周各留约 16px */
+  #plate img {
+    position: absolute;
+    width: 230px;
+    height: 458px;
+    left: 12.8px;
+    top: 9.6px;
+  }
+</style>
+</head>
+<body>
+<div id="plate"><img src="../_art/ram-cut.png" alt="" /></div>
+</body>
+</html>

@@ -1,0 +1,348 @@
+/* ============ ui.css — 气泡 / 右键菜单 / 弹窗 / 调试面板 ============ */
+
+/* ---------------- 气泡 ---------------- */
+.bubble {
+  position: absolute;
+  z-index: 200;
+  max-width: 236px;
+  min-width: 64px;
+  padding: 9px 13px 10px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.97);
+  color: #2b3040;
+  font-size: 13px;
+  line-height: 1.55;
+  letter-spacing: 0.2px;
+  box-shadow: 0 12px 28px rgba(18, 14, 40, 0.26), inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+  transform-origin: 50% 108%;
+  animation: bubble-in 0.22s cubic-bezier(0.2, 1.4, 0.4, 1);
+  pointer-events: none;
+  word-break: break-word;
+}
+
+.bubble[hidden] { display: none; }
+
+.bubble::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  width: 13px;
+  height: 13px;
+  margin-left: -6.5px;
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 2px;
+  transform: rotate(45deg);
+  box-shadow: 3px 3px 6px rgba(18, 14, 40, 0.1);
+}
+
+.bubble.is-above-left::after { left: 22px; }
+.bubble.is-above-right::after { left: auto; right: 22px; }
+
+@keyframes bubble-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.82); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.bubble__acts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+  pointer-events: auto;
+}
+
+.bubble__acts:empty { display: none; }
+
+/* ---------------- 通用按钮 ---------------- */
+.btn {
+  appearance: none;
+  border: 0;
+  border-radius: 9px;
+  padding: 6px 12px;
+  font-size: 12.5px;
+  font-family: inherit;
+  color: #3a4054;
+  background: rgba(35, 40, 56, 0.08);
+  cursor: pointer;
+  transition: background-color 0.12s ease, transform 0.06s ease;
+  white-space: nowrap;
+}
+
+.btn:hover { background: rgba(35, 40, 56, 0.14); }
+.btn:active { transform: scale(0.97); }
+
+.btn--primary {
+  background: var(--brand);
+  color: #fff;
+  font-weight: 600;
+}
+.btn--primary:hover { background: #f97f58; }
+
+.btn--danger { color: #c23c2c; background: rgba(194, 60, 44, 0.1); }
+.btn--danger:hover { background: rgba(194, 60, 44, 0.17); }
+
+.btn--sm { padding: 4px 9px; font-size: 11.5px; border-radius: 7px; }
+
+/* ---------------- 右键菜单 ---------------- */
+.menu {
+  position: absolute;
+  z-index: 300;
+  min-width: 172px;
+  padding: 6px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 16px 40px rgba(16, 12, 36, 0.32), inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  animation: menu-in 0.13s ease-out;
+  transform-origin: top left;
+}
+
+.menu[hidden] { display: none; }
+
+@keyframes menu-in {
+  from { opacity: 0; transform: scale(0.94) translateY(-4px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.menu__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #2f3444;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.menu__item:hover { background: rgba(35, 40, 56, 0.08); }
+
+.menu__item .k {
+  margin-left: auto;
+  font-size: 11px;
+  color: #8b93a5;
+}
+
+.menu__item.is-danger { color: #c23c2c; }
+.menu__item.is-danger:hover { background: rgba(194, 60, 44, 0.1); }
+
+.menu__sep {
+  height: 1px;
+  margin: 5px 8px;
+  background: var(--line);
+}
+
+.menu__title {
+  padding: 6px 10px 4px;
+  font-size: 11px;
+  color: #8b93a5;
+  letter-spacing: 0.4px;
+}
+
+/* ---------------- 弹窗 ---------------- */
+#modalMask {
+  position: absolute;
+  inset: 0;
+  /* 遮罩也挂了 .modal 类，而 .modal 里有 width: min(430px,82vw)、
+     max-height: 74vh、padding —— 这些是给内容盒子 #modalBox 用的，
+     不覆盖掉的话"全屏遮罩"会变成一个 430px 宽的小盒子靠左对齐，
+     弹窗就会挤在屏幕左上角而不是正中。 */
+  width: auto;
+  height: auto;
+  max-height: none;
+  padding: 0;
+  z-index: 400;
+  display: grid;
+  place-items: center;
+  background: rgba(14, 12, 26, 0.42);
+  backdrop-filter: blur(3px);
+  animation: fade-in 0.16s ease-out;
+}
+
+#modalMask[hidden] { display: none; }
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+.modal {
+  width: min(430px, 82vw);
+  max-height: 74vh;
+  overflow: auto;
+  padding: 18px 20px 16px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 24px 60px rgba(10, 8, 24, 0.4);
+  animation: modal-in 0.2s cubic-bezier(0.2, 1.2, 0.4, 1);
+}
+
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #232838;
+  margin-bottom: 4px;
+}
+
+.modal__sub {
+  font-size: 12px;
+  color: #8b93a5;
+  margin-bottom: 14px;
+}
+
+.modal__body {
+  font-size: 13px;
+  line-height: 1.75;
+  color: #3a4054;
+}
+
+.modal__body p { margin: 0 0 10px; }
+.modal__body p:last-child { margin-bottom: 0; }
+
+.modal__acts {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+/* 吃货日志 */
+.loglist__t {
+  margin: 14px 0 6px !important;
+  font-weight: 700;
+  color: #232838;
+}
+
+.loglist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.loglist li {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #5b6274;
+  padding: 5px 9px;
+  border-radius: 8px;
+  background: #f4f5f9;
+  word-break: break-all;
+}
+
+/* 食物仓库列表 */
+.locker {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.locker__row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(35, 40, 56, 0.045);
+  font-size: 12.5px;
+}
+
+.locker__row .nm {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.locker__row .tm { font-size: 11px; color: #949bad; }
+
+.locker__empty {
+  padding: 26px 0;
+  text-align: center;
+  font-size: 12.5px;
+  color: #949bad;
+}
+
+/* 遗书 */
+.letter {
+  padding: 16px 18px;
+  border-radius: 12px;
+  background: #fffdf7;
+  box-shadow: inset 0 0 0 1px rgba(196, 170, 120, 0.34);
+  font-size: 13px;
+  line-height: 2;
+  color: #4a4238;
+  white-space: pre-wrap;
+  font-family: "KaiTi", "STKaiti", "Microsoft YaHei", serif;
+}
+
+/* ---------------- 调试面板 ---------------- */
+.debug {
+  position: fixed;          /* fixed 才能拖到任意地方（absolute 只能相对 stage） */
+  left: 10px;
+  bottom: calc(var(--taskbar-h) + 10px);
+  z-index: 500;
+  width: 186px;
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(18, 20, 32, 0.9);
+  color: #cfd6e6;
+  font-size: 11.5px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+}
+
+.debug[hidden] { display: none; }
+
+.debug__hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  color: #98a1b8;
+  margin-bottom: 8px;
+  cursor: move;             /* 标题栏可以拖着走 */
+  user-select: none;
+  touch-action: none;
+}
+
+.debug__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+
+.debug__btn {
+  appearance: none;
+  border: 0;
+  padding: 5px 6px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #dbe2f2;
+  font-size: 11px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.debug__btn:hover { background: rgba(255, 255, 255, 0.18); }
+.debug__btn.is-danger { background: rgba(255, 110, 96, 0.24); color: #ffd9d3; }
+
+.debug__stat {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 10.5px;
+  line-height: 1.7;
+  color: #9aa3ba;
+  font-variant-numeric: tabular-nums;
+}

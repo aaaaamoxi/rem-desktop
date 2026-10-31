@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<title>拉姆 · 定稿预览</title>
+<style>
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #sheet { width: 620px; height: 660px; }
+  svg { display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div id="sheet">
+<svg viewBox="0 0 300 320" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="hairG" gradientUnits="userSpaceOnUse" x1="100" y1="26" x2="200" y2="250">
+      <stop offset="0%" stop-color="#ffd0de"/>
+      <stop offset="34%" stop-color="#f8a9c4"/>
+      <stop offset="78%" stop-color="#ec8bab"/>
+      <stop offset="100%" stop-color="#d96d92"/>
+    </linearGradient>
+    <linearGradient id="hairBackG" gradientUnits="userSpaceOnUse" x1="100" y1="26" x2="200" y2="250">
+      <stop offset="0%" stop-color="#eb96b3"/>
+      <stop offset="50%" stop-color="#da769a"/>
+      <stop offset="100%" stop-color="#bf5680"/>
+    </linearGradient>
+    <linearGradient id="skinG" gradientUnits="userSpaceOnUse" x1="110" y1="30" x2="190" y2="250">
+      <stop offset="0%" stop-color="#fff4ec"/>
+      <stop offset="55%" stop-color="#fdeade"/>
+      <stop offset="100%" stop-color="#f9d9c9"/>
+    </linearGradient>
+    <linearGradient id="irisG" gradientUnits="userSpaceOnUse" x1="150" y1="148" x2="150" y2="188">
+      <stop offset="0%" stop-color="#7d1b3f"/>
+      <stop offset="30%" stop-color="#c93f72"/>
+      <stop offset="68%" stop-color="#f97fa6"/>
+      <stop offset="92%" stop-color="#ffc4d6"/>
+      <stop offset="100%" stop-color="#ffe3ec"/>
+    </linearGradient>
+    <linearGradient id="apronG" gradientUnits="userSpaceOnUse" x1="110" y1="245" x2="190" y2="320">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#ecdee5"/>
+    </linearGradient>
+    <linearGradient id="bowG" gradientUnits="userSpaceOnUse" x1="50" y1="90" x2="120" y2="200">
+      <stop offset="0%" stop-color="#c6b4f2"/>
+      <stop offset="48%" stop-color="#9c83d8"/>
+      <stop offset="100%" stop-color="#7559b2"/>
+    </linearGradient>
+    <radialGradient id="cheekG">
+      <stop offset="0%" stop-color="#ff8fae" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#ff8fae" stop-opacity="0"/>
+    </radialGradient>
+
+    <g id="fl">
+      <ellipse cx="0" cy="-4.2" rx="2.5" ry="3.2"/>
+      <ellipse cx="0" cy="-4.2" rx="2.5" ry="3.2" transform="rotate(72)"/>
+      <ellipse cx="0" cy="-4.2" rx="2.5" ry="3.2" transform="rotate(144)"/>
+      <ellipse cx="0" cy="-4.2" rx="2.5" ry="3.2" transform="rotate(216)"/>
+      <ellipse cx="0" cy="-4.2" rx="2.5" ry="3.2" transform="rotate(288)"/>
+    </g>
+
+    <clipPath id="eyeL"><ellipse cx="122" cy="168" rx="17.5" ry="16.5"/></clipPath>
+    <clipPath id="eyeR"><ellipse cx="178" cy="168" rx="17.5" ry="16.5"/></clipPath>
+  </defs>
+
+  <!-- ================= 1. 后发 ================= -->
+  <path fill="url(#hairBackG)"
+    d="M150,26 C100,26 78,62 78,112
+       C78,148 80,180 86,204
+       C90,218 100,222 104,212
+       C108,200 104,186 102,172 L198,172
+       C196,186 192,200 196,212
+       C200,222 210,218 214,204
+       C220,180 222,148 222,112
+       C222,62 200,26 150,26 Z"/>
+
+  <!-- ================= 2. 脖子 ================= -->
+  <path fill="url(#skinG)" d="M134,214 h32 v40 c0,12 -32,12 -32,0 Z"/>
+  <path fill="#e3ab9c" opacity=".45" d="M134,214 h32 v14 c-10,8 -22,8 -32,0 Z"/>
+
+  <!-- ================= 3. 肩与衣领（露肩女仆装） ================= -->
+  <path fill="#241f2b"
+    d="M150,254 C126,254 106,264 96,282 C84,302 78,312 76,320 L224,320
+       C222,312 216,302 204,282 C194,264 174,254 150,254 Z"/>
+  <!-- 露肩的白荷叶袖 -->
+  <path fill="url(#apronG)" stroke="#dccad4" stroke-width=".9"
+    d="M100,282 C90,290 84,302 82,314 L118,314 C118,300 112,286 100,282 Z"/>
+  <path fill="url(#apronG)" stroke="#dccad4" stroke-width=".9"
+    d="M200,282 C210,290 216,302 218,314 L182,314 C182,300 188,286 200,282 Z"/>
+  <!-- 荷叶领 -->
+  <path fill="url(#apronG)" stroke="#dccad4" stroke-width=".9"
+    d="M150,246 C170,246 187,252 196,261
+       C199,273 190,281 181,277
+       C177,283 169,283 165,277
+       C161,283 153,283 149,277
+       C145,283 137,283 133,277
+       C129,283 121,283 117,277
+       C108,281 100,273 104,261
+       C113,252 130,246 150,246 Z"/>
+  <!-- 黑蝴蝶结 -->
+  <g fill="#241f2b">
+    <path d="M150,270 C141,261 126,264 127,271 C128,279 140,277 150,274 Z"/>
+    <path d="M150,270 C159,261 174,264 173,271 C172,279 160,277 150,274 Z"/>
+    <path d="M146,276 L139,297 L146,294 L149,300 Z"/>
+    <path d="M154,276 L161,297 L154,294 L151,300 Z"/>
+    <circle cx="150" cy="272" r="3.6"/>
+  </g>
+
+  <!-- ================= 4. 耳朵 + 脸 ================= -->
+  <ellipse cx="96" cy="164" rx="8.5" ry="12.5" fill="url(#skinG)"/>
+  <ellipse cx="204" cy="164" rx="8.5" ry="12.5" fill="url(#skinG)"/>
+
+  <!-- 脸：颊部饱满、下巴小而圆 -->
+  <path fill="url(#skinG)"
+    d="M150,36 C120,36 98,60 94,104
+       C91,132 94,164 104,190
+       C113,213 132,236 150,236
+       C168,236 187,213 196,190
+       C206,164 209,132 206,104
+       C202,60 180,36 150,36 Z"/>
+  <!-- 脸侧暗部 -->
+  <path fill="#eec4b4" opacity=".3"
+    d="M94,104 C91,132 94,164 104,190 C113,213 132,236 150,236
+       C138,222 128,200 124,176 C120,152 122,110 128,72 C110,80 96,86 94,104 Z"/>
+
+  <!-- ================= 5. 刘海：五缕长发片，垂到眉上 ================= -->
+  <g fill="url(#hairG)">
+    <!-- 最左一缕 -->
+    <path d="M86,96 C86,56 108,30 142,26 C122,44 106,78 100,124 C98,146 96,158 92,172
+             C84,158 84,124 86,96 Z"/>
+    <!-- 左二 -->
+    <path d="M100,32 C124,20 150,22 162,28 C144,52 130,92 126,150 C125,162 124,168 122,176
+             C110,160 100,124 100,90 C100,66 100,44 100,32 Z"/>
+    <!-- 中 -->
+    <path d="M132,24 C152,20 172,24 182,32 C166,58 156,104 154,156 C153,166 152,172 150,180
+             C140,158 132,120 130,84 C129,58 130,36 132,24 Z"/>
+    <!-- 右二 -->
+    <path d="M160,24 C182,26 200,40 208,62 C204,96 198,140 192,168 C191,174 190,178 188,182
+             C180,158 174,110 168,70 C166,52 163,36 160,24 Z"/>
+    <!-- 最右一缕 -->
+    <path d="M186,30 C206,42 216,70 216,100 C216,132 212,158 206,174
+             C202,160 200,146 198,126 C194,88 190,56 186,30 Z"/>
+  </g>
+
+  <!-- 发丝分隔：几根细线，别太多 -->
+  <g fill="none" stroke="#cf6e8e" stroke-width="1.3" stroke-linecap="round" opacity=".38">
+    <path d="M118,44 C112,80 106,120 102,164"/>
+    <path d="M150,34 C150,80 150,132 150,172"/>
+    <path d="M182,40 C186,80 190,132 190,170"/>
+  </g>
+  <!-- 头顶高光 -->
+  <path fill="#ffe6ef" opacity=".75" d="M108,66 C120,44 138,32 158,30 C140,42 124,58 114,78 Z"/>
+  <path fill="#ffe6ef" opacity=".4" d="M172,32 C190,38 202,50 208,66 C198,52 186,40 172,34 Z"/>
+
+  <!-- ================= 6. 侧发：贴颊，到下颌收尖 ================= -->
+  <path fill="url(#hairG)" d="M100,110 C90,146 88,186 94,214 C97,226 108,224 108,212 C103,186 103,148 108,112 Z"/>
+  <path fill="url(#hairG)" d="M200,110 C210,146 212,186 206,214 C203,226 192,224 192,212 C197,186 197,148 192,112 Z"/>
+  <path fill="#bf5680" opacity=".24" d="M103,126 C97,160 96,192 100,216 C102,222 105,220 105,213 C101,190 101,158 105,128 Z"/>
+  <path fill="#bf5680" opacity=".24" d="M197,126 C203,160 204,192 200,216 C198,222 195,220 195,213 C199,190 199,158 195,128 Z"/>
+
+  <!-- ================= 7. 黑发带 + 白色花冠 ================= -->
+  <path fill="none" stroke="#2b2430" stroke-width="6.5" stroke-linecap="round"
+    d="M92,92 C96,54 120,32 150,32 C180,32 204,54 208,92"/>
+  <g fill="#fdfbff" stroke="#e2d5e4" stroke-width=".7">
+    <use href="#fl" transform="translate(100,78) scale(1.1) rotate(-22)"/>
+    <use href="#fl" transform="translate(116,54) scale(1.22) rotate(2)"/>
+    <use href="#fl" transform="translate(138,40) scale(1.16) rotate(-10)"/>
+    <use href="#fl" transform="translate(162,40) scale(1.16) rotate(10)"/>
+    <use href="#fl" transform="translate(184,54) scale(1.22) rotate(-2)"/>
+    <use href="#fl" transform="translate(200,78) scale(1.1) rotate(20)"/>
+  </g>
+  <g fill="#ecd3e0">
+    <circle cx="100" cy="78" r="1.4"/><circle cx="116" cy="54" r="1.5"/>
+    <circle cx="138" cy="40" r="1.4"/><circle cx="162" cy="40" r="1.4"/>
+    <circle cx="184" cy="54" r="1.5"/><circle cx="200" cy="78" r="1.4"/>
+  </g>
+
+  <!-- ================= 8. 紫色蝴蝶结 ================= -->
+  <g>
+    <!-- 飘带 -->
+    <path fill="url(#bowG)" d="M96,112 C88,146 86,180 90,206 C92,217 100,217 101,207 C97,182 99,148 104,118 Z"/>
+    <path fill="url(#bowG)" d="M104,114 C102,148 100,180 105,202 C107,212 115,212 115,202 C110,180 111,148 111,118 Z"/>
+    <!-- 上环 -->
+    <path fill="url(#bowG)" d="M98,108 C82,86 52,90 54,110 C56,128 82,124 98,116 Z"/>
+    <!-- 下环 -->
+    <path fill="url(#bowG)" d="M98,112 C82,102 60,112 64,128 C68,144 92,134 98,120 Z"/>
+    <!-- 右环 -->
+    <path fill="url(#bowG)" d="M104,108 C112,90 134,88 136,104 C138,120 114,120 104,114 Z"/>
+    <!-- 折面 -->
+    <path fill="#6a53a6" opacity=".4" d="M98,116 C86,106 68,108 64,118 C72,110 86,114 98,120 Z"/>
+    <path fill="#6a53a6" opacity=".28" d="M105,110 C113,101 126,100 129,106 C121,103 112,107 106,115 Z"/>
+    <ellipse cx="101" cy="110" rx="7" ry="6.4" fill="#6a53a6"/>
+    <path fill="#59458f" opacity=".45" d="M101,106 C96,108 95,113 99,117 C96,112 97,108 101,106 Z"/>
+  </g>
+
+  <!-- 紫色交叉发夹 -->
+  <g stroke="#9583cc" stroke-width="2.4" stroke-linecap="round">
+    <path d="M132,96 L146,108"/>
+    <path d="M146,96 L132,108"/>
+  </g>
+
+  <!-- ================= 9. 眼睛 ================= -->
+  <!-- 左眼 -->
+  <g>
+    <ellipse cx="122" cy="168" rx="17.5" ry="16.5" fill="#fffbfc"/>
+    <g clip-path="url(#eyeL)">
+      <ellipse cx="122" cy="169" rx="14.2" ry="14.6" fill="url(#irisG)"/>
+      <ellipse cx="122" cy="170" rx="5.8" ry="7" fill="#43182b"/>
+      <ellipse cx="122" cy="178" rx="8.6" ry="5" fill="#ffd6e2" opacity=".5"/>
+      <ellipse cx="115" cy="160" rx="4.2" ry="4.6" fill="#fff" opacity=".96"/>
+      <ellipse cx="128" cy="177" rx="2.6" ry="2.8" fill="#fff" opacity=".55"/>
+      <!-- 上眼睑投影 -->
+      <path fill="#3a222c" d="M104,143 h36 v16 c-10,6 -26,6 -36,0 Z"/>
+    </g>
+    <!-- 上睫毛 -->
+    <path fill="#2a1a23" d="M104,162 C106,150 116,144 127,145 C138,146 142,152 140,162 C136,154 129,151 122,151 C113,151 107,155 104,162 Z"/>
+    <path fill="#2a1a23" d="M102,160 C95,154 89,157 92,165 C95,160 99,160 103,165 Z"/>
+    <!-- 下眼线 -->
+    <path fill="none" stroke="#a4617c" stroke-width="1.4" stroke-linecap="round" d="M110,179 C116,185 130,185 136,179"/>
+  </g>
+  <!-- 右眼 -->
+  <g>
+    <ellipse cx="178" cy="168" rx="17.5" ry="16.5" fill="#fffbfc"/>
+    <g clip-path="url(#eyeR)">
+      <ellipse cx="178" cy="169" rx="14.2" ry="14.6" fill="url(#irisG)"/>
+      <ellipse cx="178" cy="170" rx="5.8" ry="7" fill="#43182b"/>
+      <ellipse cx="178" cy="178" rx="8.6" ry="5" fill="#ffd6e2" opacity=".5"/>
+      <ellipse cx="171" cy="160" rx="4.2" ry="4.6" fill="#fff" opacity=".96"/>
+      <ellipse cx="184" cy="177" rx="2.6" ry="2.8" fill="#fff" opacity=".55"/>
+      <path fill="#3a222c" d="M160,143 h36 v16 c-10,6 -26,6 -36,0 Z"/>
+    </g>
+    <path fill="#2a1a23" d="M160,162 C162,150 172,144 183,145 C194,146 198,152 196,162 C192,154 185,151 178,151 C169,151 163,155 160,162 Z"/>
+    <path fill="#2a1a23" d="M198,160 C205,154 211,157 208,165 C205,160 201,160 197,165 Z"/>
+    <path fill="none" stroke="#a4617c" stroke-width="1.4" stroke-linecap="round" d="M166,179 C172,185 186,185 192,179"/>
+  </g>
+
+  <!-- 眉毛：藏在刘海下，只露一点 -->
+  <path fill="none" stroke="#d67f9f" stroke-width="2.2" stroke-linecap="round" d="M112,144 C120,139 130,138 138,141"/>
+  <path fill="none" stroke="#d67f9f" stroke-width="2.2" stroke-linecap="round" d="M162,141 C170,138 180,139 188,144"/>
+
+  <!-- 腮红 -->
+  <ellipse cx="108" cy="188" rx="13" ry="7" fill="url(#cheekG)"/>
+  <ellipse cx="192" cy="188" rx="13" ry="7" fill="url(#cheekG)"/>
+
+  <!-- 鼻子 + 嘴 -->
+  <path fill="none" stroke="#d8a191" stroke-width="1.4" stroke-linecap="round" d="M150,196 C151.4,198 150.6,199.4 149.2,199.4"/>
+  <path fill="none" stroke="#ad6664" stroke-width="2" stroke-linecap="round" d="M146,208 L154,208"/>
+  <path fill="#d99a95" opacity=".5" d="M146,212 C148,214 152,214 154,212 C152,213 148,213 146,212 Z"/>
+</svg>
+</div>
+</body>
+</html>

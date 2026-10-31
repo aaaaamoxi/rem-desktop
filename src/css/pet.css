@@ -1,0 +1,273 @@
+/* ============ pet.css — 角色：姿态 / 关键帧 / 表情层 ============
+   角色现在是位图立绘（<img class="pet__art">），不能像 SVG 那样单独动眼睛手脚，
+   所以：呼吸/走路/咀嚼都做在整张图上，眼睛和嘴靠一层极小的 SVG 叠加（.pet__face）。
+   铁律不变：位移归 JS（#pet），倾倒归 JS（--tilt），姿态归 CSS。
+   ============================================================ */
+
+.pet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 239px;      /* 立绘是二头身，宽高比 1:1.99 */
+  z-index: 100;
+  pointer-events: none;
+  will-change: transform;
+  transform: translate3d(0, 0, 0) scaleX(1);
+}
+
+/* 脚底在盒底上方 gap(2px)，影子就压在那条线上 */
+.pet__shadow {
+  position: absolute;
+  left: 50%;
+  bottom: 3px;        /* 影子压在脚底那条线上，别掉进任务栏后面 */
+  width: 50px;
+  height: 12px;
+  margin-left: -25px;
+  border-radius: 50%;
+  /* 壁纸偏暗，影子要够深才看得见，不然她像浮在半空 */
+  background: radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.26) 56%, transparent 74%);
+  transform: scale(1);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.pet__tilt {
+  position: absolute;
+  inset: 0;
+  transform: rotate(var(--tilt, 0deg));
+  transform-origin: 50% 96%;
+  transition: transform 0.16s ease-out;
+}
+
+/* 走路时整体往前倾一点 —— 左右对称的角色，没这个看不出往哪走 */
+.pet.is-walking .pet__tilt {
+  transform: rotate(calc(var(--tilt, 0deg) + 3deg * var(--dir, 1)));
+}
+
+.pet__body {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 97%;
+  animation: breathe 3.4s ease-in-out infinite;
+  pointer-events: auto;
+  cursor: grab;
+  will-change: transform;
+}
+
+.pet__body:active { cursor: grabbing; }
+
+/* 立绘 + 表情层的公共容器：所有姿态变换都写在这一层，
+   这样眼睛的 SVG 补丁才会跟着立绘一起压扁 / 旋转 / 咀嚼。
+   transform-origin 必须和原来 .pet__art 的一致，否则位移量全变 */
+.pet__artwrap {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 97%;
+  will-change: transform;
+}
+
+.pet__art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* 表情层：默认全隐形，只有状态 class 到位才显形 */
+.pet__face {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.fx-eye,
+.fx-mouth { opacity: 0; transition: opacity 0.07s linear; }
+.fx-happy { opacity: 0; }
+
+.fx-patch { fill: var(--fx-skin, #f7e7da); }
+.fx-lid {
+  fill: none;
+  stroke: var(--fx-line, #4a3240);
+  stroke-width: 1.9;
+  stroke-linecap: round;
+}
+.fx-open { fill: var(--fx-mouth, #b0556a); }
+
+.pet.is-blink .fx-eye,
+.pet.is-sleeping .fx-eye,
+.pet.is-dead .fx-eye { opacity: 1; }
+
+/* ^^ 开心眼：吃东西和被戳高兴的时候 */
+.pet.is-happy .fx-eye,
+.pet.is-eating .fx-eye { opacity: 1; }
+.pet.is-happy .fx-closed,
+.pet.is-eating .fx-closed { opacity: 0; }
+.pet.is-happy .fx-happy,
+.pet.is-eating .fx-happy { opacity: 1; }
+
+.pet.is-eating .fx-mouth { opacity: 1; }
+.pet.is-talking .fx-mouth { animation: talk-flap 0.28s steps(1, end) infinite; }
+
+@keyframes talk-flap {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.pet__fx {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ---------------- 基础动画（幅度按 279 高重调过） ---------------- */
+
+@keyframes breathe {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  50% { transform: translateY(-1.2px) scale(1.005, 1.008); }
+}
+
+@keyframes walk-bob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-4.5px) rotate(-1.4deg); }
+  50% { transform: translateY(0) rotate(0deg); }
+  75% { transform: translateY(-2.8px) rotate(1.4deg); }
+}
+
+/* 位图没法只动下巴，咀嚼就做成整体的小幅挤压 + 歪头 */
+@keyframes art-chew {
+  0%, 100% { transform: translateY(0) rotate(0deg) scale(1, 1); }
+  30% { transform: translateY(1px) rotate(1.3deg) scale(1.022, 0.985); }
+  65% { transform: translateY(-0.5px) rotate(-1.1deg) scale(0.99, 1.012); }
+}
+
+@keyframes hop {
+  0% { transform: translateY(0) scale(1, 1); }
+  22% { transform: translateY(3px) scale(1.06, 0.93); }
+  50% { transform: translateY(-11px) scale(0.97, 1.05); }
+  78% { transform: translateY(1px) scale(1.04, 0.95); }
+  100% { transform: translateY(0) scale(1, 1); }
+}
+
+@keyframes angry-bounce {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-3px) rotate(-2.6deg); }
+}
+
+/* ---------------- 状态 ---------------- */
+
+.pet.is-walking .pet__body { animation: walk-bob var(--step-dur, 0.52s) ease-in-out infinite; }
+
+.pet.is-eating .pet__artwrap { animation: art-chew 0.36s ease-in-out 4; }
+
+.pet.is-held .pet__body,
+.pet.is-held .pet__artwrap { animation: none; }
+.pet.is-held .pet__shadow { transform: scale(0.72); opacity: 0.6; }
+
+.pet.is-release .pet__artwrap { animation: hop 0.42s cubic-bezier(0.3, 0.9, 0.4, 1); }
+
+/* 桌面版：把文件拖到她身上时，她知道你要喂她 */
+.pet.is-drop-ready .pet__art {
+  filter: drop-shadow(0 0 10px rgba(255, 214, 120, 0.95));
+}
+
+/* 饥饿值小条：竖在她右上角，跟任务栏那根一个意思，
+   但这个跟着她走，桌面版（没有任务栏）也能一眼看见。
+   位置要说清楚：角色整体会按朝向做 scaleX(dir) 镜像（她朝左走时整个人是反的），
+   直接写 right 的话，她一转身这条就跑到左边去了。
+   所以改成以盒子中线为基准，再按 --dir 横向补偿 —— 镜像两次等于没镜像，
+   她不管朝哪边，这根条都稳稳待在**屏幕视角**的右上角。 */
+.pet__hunger {
+  position: absolute;
+  left: 50%;
+  margin-left: -3.5px;
+  top: 32px;
+  width: 8px;
+  height: 44px;
+  transform: translateX(calc(var(--dir, 1) * 58px));
+  top: 26px;
+  border-radius: 99px;
+  background: rgba(18, 16, 28, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.42), 0 2px 7px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* 填充从下往上长：越高 = 越饿 */
+.pet__hunger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--v, 0%);
+  border-radius: 99px;
+  background: var(--fill, #7ed9b0);
+  transition: height 0.4s ease, background 0.4s ease;
+}
+
+/* 饿到快不行了，闪一下 */
+.pet__hunger.is-high {
+  animation: hunger-warn 1.4s ease-in-out infinite;
+}
+
+@keyframes hunger-warn {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.42; }
+}
+
+/* 睡：站着塌一点，不躺倒 —— 位图躺倒只能靠旋转，比压扁难看 */
+.pet.is-sleeping .pet__body { animation-duration: 6.2s; }
+.pet.is-sleeping .pet__artwrap { transform: scale(1.012, 0.955) translateY(5px); }
+
+.pet.is-disturbed .pet__artwrap { animation: angry-bounce 0.16s ease-in-out 4; }
+
+/* 长眠：褪色 + 瘫坐下去（279 高要是转 -74° 会把头甩出屏幕） */
+.pet.is-dead { filter: grayscale(1); opacity: 0.74; }
+.pet.is-dead .pet__body {
+  animation: none;
+  transform: translateY(16px) rotate(-16deg);
+}
+.pet.is-dead .pet__artwrap { animation: none; }
+.pet.is-dead .pet__shadow { transform: scale(1.1); opacity: 0.42; }
+
+/* 虚弱（复活中）：蔫着，但还活着 */
+.pet.is-weak .pet__body { animation-duration: 5s; }
+.pet.is-weak .pet__artwrap { transform: rotate(-6deg) translateY(9px) scale(1.02, 0.94); }
+
+/* ---------------- Zzz / 爱心 ---------------- */
+.fx-z {
+  position: absolute;
+  left: 74%;
+  top: 8%;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  animation: z-float 2.6s ease-in-out infinite;
+  opacity: 0;
+}
+
+.fx-z:nth-child(2) { animation-delay: 0.8s; font-size: 16px; }
+.fx-z:nth-child(3) { animation-delay: 1.6s; font-size: 19px; }
+
+@keyframes z-float {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.8); }
+  25% { opacity: 0.95; }
+  100% { opacity: 0; transform: translate(12px, -34px) scale(1.1); }
+}
+
+.fx-heart {
+  position: absolute;
+  left: 50%;
+  top: 4%;
+  font-size: 14px;
+  animation: heart-up 1.1s ease-out forwards;
+}
+
+@keyframes heart-up {
+  0% { opacity: 0; transform: translate(-50%, 0) scale(0.6); }
+  30% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -42px) scale(1.05); }
+}

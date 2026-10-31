@@ -1,0 +1,27 @@
+# 依赖
+node_modules/
+
+# 打包产物（安装包 120MB，别进仓库）
+dist/
+release/
+_stage/
+_build/
+
+# 截图与美术源图（体积大，运行时只用到 assets/*.png）
+_shots/
+_art/
+
+# 桌宠在真实桌面上生成的产物
+吃掉的食物/
+遗书.txt
+
+# 日志与临时文件
+*.log
+npm-debug.log*
+*.tmp
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

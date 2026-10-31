@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self'; media-src 'self' data:" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>拉姆 / 雷姆 · 桌面宠物</title>
+<link rel="stylesheet" href="src/css/base.css" />
+<link rel="stylesheet" href="src/css/pet.css" />
+<link rel="stylesheet" href="src/css/ui.css" />
+</head>
+<body>
+<div id="stage">
+
+  <div class="pet" id="pet" aria-label="小家伙">
+    <div class="pet__shadow" id="petShadow"></div>
+    <div class="pet__tilt" id="petTilt">
+      <div class="pet__body" id="petBody"></div>
+    </div>
+    <div class="pet__fx" id="petFx"></div>
+    <!-- 饥饿值：竖着的小条，跟着她走 -->
+    <div class="pet__hunger" id="petHunger" title="饱腹度"></div>
+  </div>
+
+  <div class="bubble" id="bubble" hidden>
+    <div class="bubble__text" id="bubbleText"></div>
+    <div class="bubble__acts" id="bubbleActs"></div>
+  </div>
+
+  <div class="menu" id="menu" hidden></div>
+  <div class="modal" id="modalMask" hidden><div class="modal" id="modalBox"></div></div>
+  <div class="debug" id="debugPanel" hidden></div>
+  <div class="toast" id="toast" hidden></div>
+
+</div>
+
+<script src="src/js/config.js"></script>
+<script src="src/js/util.js"></script>
+<script src="src/js/bridge.js"></script>
+<script src="src/js/adapter-electron.js"></script>
+<script src="src/js/pet-face.js"></script>
+<script src="src/js/chars.js"></script>
+<script src="src/js/bubble.js"></script>
+<script src="src/js/icons.js"></script>
+<script src="src/js/fsm.js"></script>
+<script src="src/js/pet.js"></script>
+<script src="src/js/hunger.js"></script>
+<script src="src/js/night.js"></script>
+<script src="src/js/scene.js"></script>
+<script src="src/js/debug.js"></script>
+<script src="src/js/main.js"></script>
+</body>
+</html>

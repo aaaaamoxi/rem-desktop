@@ -1,0 +1,10 @@
+{
+  "name": "rem-desktop-pet",
+  "productName": "雷姆桌宠",
+  "version": "0.4.0",
+  "description": "雷姆桌宠 · 桌面版 —— 住在你 Windows 桌面上的小家伙",
+  "author": "Rem Desk Pet Contributors",
+  "license": "MIT",
+  "main": "electron/main.js",
+  "scripts": {}
+}

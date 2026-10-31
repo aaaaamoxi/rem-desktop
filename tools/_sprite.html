@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="utf-8" /><title>sprite</title>
+<style>html,body{margin:0;background:#fff}</style>
+</head>
+<body>
+<script>
+/* 供 make-sprites.js 调用：把源图高质量下采样后回传 base64。
+   resizeQuality 不给保证，所以做了两步缩放兜底。 */
+window.makeSprite = async function (src, tw, th) {
+  const img = new Image();
+  img.src = src;
+  await img.decode();
+  const cv = document.createElement('canvas');
+  cv.width = tw; cv.height = th;
+  const ctx = cv.getContext('2d');
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+
+  let bmp = null;
+  try {
+    bmp = await createImageBitmap(img, {
+      resizeWidth: tw, resizeHeight: th, resizeQuality: 'high'
+    });
+  } catch (e) { bmp = null; }
+
+  if (bmp) {
+    ctx.drawImage(bmp, 0, 0);
+  } else {
+    /* 兜底：先缩到 2 倍再缩到目标，比一步大比例缩放干净 */
+    const mid = document.createElement('canvas');
+    mid.width = tw * 2; mid.height = th * 2;
+    const mctx = mid.getContext('2d');
+    mctx.imageSmoothingEnabled = true;
+    mctx.imageSmoothingQuality = 'high';
+    mctx.drawImage(img, 0, 0, tw * 2, th * 2);
+    ctx.drawImage(mid, 0, 0, tw, th);
+  }
+  return cv.toDataURL('image/png');
+};
+</script>
+</body>
+</html>
