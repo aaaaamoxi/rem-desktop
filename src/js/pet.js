@@ -242,7 +242,7 @@
       return;
     }
 
-    /* 真正动手之前先问平台：网页版永远 ok，桌面版会去移文件 */
+    /* 真正动手之前先问一下：这个文件到底吃不吃得下 */
     const res = await Pet.bridge.eatIcon(item);
     if (!res || !res.ok) {
       say((res && res.msg) || '这个吃不下');

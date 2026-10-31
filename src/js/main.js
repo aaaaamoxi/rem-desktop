@@ -443,8 +443,8 @@
     syncLocker() { return syncLocker(); },
 
     /* 清空存档并重新开始。
-       网页版存 localStorage，桌面版存 userData/pet-state.json，
-       所以走 bridge.resetState()，两边行为一致。
+       存档在 userData/pet-state.json，所以走 bridge.resetState()，
+       让主进程把文件删掉。
        关键：先 pauseSave —— reload 会触发 beforeunload → save()，
        不暂停的话刚删掉的存档会被原样写回来，等于没重置。 */
     async resetAll() {

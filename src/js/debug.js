@@ -1,6 +1,6 @@
 /* ============ debug.js — ?debug=1 时间旅行面板 ============
    没有这个面板，验收"饿死剧情"要等 4 天，等于没法测。
-   网页版打开 index.html?debug=1，桌面版 npm start 默认就带着（开发版自动开）。
+   桌面版 npm start 默认就带着（开发版自动开），打包版用 ?debug=1。
    =========================================================*/
 (function (w) {
   const Pet = w.Pet;
@@ -43,7 +43,7 @@
       stat.id = 'debugStat';
       panel.appendChild(stat);
 
-      /* 桌面版托盘菜单能折叠它；网页版没托盘，用 Ctrl+Shift+D 或 F12 */
+      /* 托盘菜单能折叠它；也可以用 Ctrl+Shift+D 或 F12 */
       if (Pet.bridge && Pet.bridge.onTogglePanel) {
         Pet.bridge.onTogglePanel(() => Debug.toggle());
       }
@@ -133,8 +133,8 @@
       if (!st.deadAt) { U.toast('她没长眠'); return; }
       st.reviveNeed = 1;
       /* fake:true —— 调试用假投喂，不去找真实文件。
-         网页版原来靠 adapter-web 的"永远 ok"蒙混过关，桌面版会真的去找
-         id='debug' 的文件，必然失败。两端统一走这条路。 */
+         桌面版的 reviveByFeed 会真的去找 id='debug' 的文件，必然失败，
+         所以走这条假投喂的路。 */
       Pet.hunger.reviveByFeed(
         { id: 'debug', label: 'debug.txt', glyph: 'txt', kind: 'file', pos: { x: 0, y: 0 }, el: null },
         { fake: true });
